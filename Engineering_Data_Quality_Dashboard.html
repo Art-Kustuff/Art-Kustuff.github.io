@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Data Quality & Trust Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0b0e14;--bg2:#131720;--bg3:#1a1f2e;--bg4:#222839;
+--border:#2a3040;--border2:#3a4055;
+--text:#e2e4e9;--text2:#8b90a0;--text3:#5a6075;
+--green:#22c55e;--green2:#16a34a;--green-bg:rgba(34,197,94,0.1);
+--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);
+--red:#ef4444;--red2:#dc2626;--red-bg:rgba(239,68,68,0.1);
+--blue:#3b82f6;--blue2:#60a5fa;--blue-bg:rgba(59,130,246,0.08);
+--purple:#a78bfa;
+--mono:'IBM Plex Mono',monospace;--sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5;overflow-x:hidden}
+
+/* HEADER */
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 0;position:sticky;top:0;z-index:50;backdrop-filter:blur(20px)}
+.header .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.header h1{font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:0.5px}
+.header h1 span{color:var(--blue2)}
+.header-meta{font-size:12px;color:var(--text2);font-family:var(--mono)}
+.container{max-width:1320px;margin:0 auto;padding:0 20px}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:24px 0}
+.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 20px}
+.kpi-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-family:var(--mono)}
+.kpi-value{font-size:28px;font-weight:700;font-family:var(--mono)}
+.kpi-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.kpi--green .kpi-value{color:var(--green)}
+.kpi--amber .kpi-value{color:var(--amber)}
+.kpi--red .kpi-value{color:var(--red)}
+.kpi--blue .kpi-value{color:var(--blue2)}
+
+/* SECTION */
+.section{margin:32px 0}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.section-num{font-family:var(--mono);font-size:12px;color:var(--blue2);background:var(--blue-bg);padding:4px 10px;border-radius:4px;font-weight:600}
+.section-title{font-size:16px;font-weight:700;letter-spacing:0.3px}
+.section-desc{font-size:12px;color:var(--text2);margin-left:auto}
+
+/* HEATMAP TABLE */
+.heatmap{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono)}
+.heatmap th{background:var(--bg3);color:var(--text2);padding:8px 10px;text-align:center;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid var(--border);position:sticky;top:60px;z-index:10}
+.heatmap th:first-child{text-align:left;min-width:140px}
+.heatmap td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--border)}
+.heatmap td:first-child{text-align:left;font-weight:500;color:var(--text)}
+.heatmap tr:hover{background:var(--bg3)}
+.heatmap .count{color:var(--text2);font-size:11px}
+
+/* Heatmap colors */
+.h-green{background:rgba(34,197,94,0.18);color:#4ade80}
+.h-lgreen{background:rgba(34,197,94,0.10);color:#86efac}
+.h-yellow{background:rgba(245,158,11,0.15);color:#fbbf24}
+.h-orange{background:rgba(249,115,22,0.15);color:#fb923c}
+.h-red{background:rgba(239,68,68,0.18);color:#f87171}
+.h-dgrey{background:rgba(100,100,120,0.1);color:var(--text3)}
+
+/* CONTRACTOR CARDS */
+.contractor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.c-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;transition:border-color 0.2s}
+.c-card:hover{border-color:var(--border2)}
+.c-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.c-card-name{font-weight:700;font-size:14px}
+.c-card-badge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.c-card-bar{height:6px;background:var(--bg4);border-radius:3px;margin:8px 0;overflow:hidden}
+.c-card-fill{height:100%;border-radius:3px;transition:width 0.8s ease}
+.c-card-stats{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:var(--text2);font-family:var(--mono)}
+.c-card-stats span{padding:2px 0}
+.c-card-stats .val{color:var(--text);font-weight:500}
+
+/* SCORE TABLE */
+.score-table{width:100%;border-collapse:collapse;font-size:12px}
+.score-table th{background:var(--bg3);color:var(--text2);padding:10px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid var(--border)}
+.score-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.score-table tr:hover{background:var(--bg3)}
+.score-table .score-cell{font-family:var(--mono);font-weight:600;text-align:center}
+.traffic{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.traffic-g{background:var(--green)}
+.traffic-a{background:var(--amber)}
+.traffic-r{background:var(--red)}
+
+/* MINI BAR */
+.mini-bar{display:inline-block;height:14px;border-radius:2px;min-width:2px}
+
+/* ISSUES PANEL */
+.issues-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.issue-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px;border-left:3px solid var(--red)}
+.issue-card.warn{border-left-color:var(--amber)}
+.issue-card.info{border-left-color:var(--blue2)}
+.issue-val{font-size:22px;font-weight:700;font-family:var(--mono);color:var(--text)}
+.issue-label{font-size:11px;color:var(--text2);margin-top:2px}
+.issue-pct{font-size:11px;color:var(--text3);font-family:var(--mono)}
+
+/* FOOTER */
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 0;margin-top:40px;text-align:center}
+.footer p{font-size:11px;color:var(--text3);font-family:var(--mono)}
+
+/* TAB NAV */
+.tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--bg2);border-radius:6px;padding:3px;border:1px solid var(--border);width:fit-content}
+.tab{padding:6px 16px;font-size:12px;font-family:var(--mono);font-weight:500;color:var(--text2);cursor:pointer;border-radius:4px;transition:all 0.2s;border:none;background:none}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--blue-bg);color:var(--blue2)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* PROGRESS BAR INLINE */
+.pbar{display:flex;align-items:center;gap:8px}
+.pbar-track{flex:1;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.pbar-fill{height:100%;border-radius:4px}
+.pbar-val{font-family:var(--mono);font-size:12px;font-weight:600;min-width:50px;text-align:right}
+
+@media(max-width:768px){
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .contractor-grid{grid-template-columns:1fr}
+  .heatmap{font-size:10px}
+  .heatmap th,.heatmap td{padding:4px 6px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <h1><span>▣</span> Engineering Data Quality & Trust Dashboard</h1>
+    <div class="header-meta">LNG Megaproject · 641K tags · 9 Contractors · Updated Apr 2026</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- KPI ROW -->
+<div class="kpi-row">
+  <div class="kpi kpi--blue">
+    <div class="kpi-label">Total Tags</div>
+    <div class="kpi-value">641,441</div>
+    <div class="kpi-sub">11 disciplines</div>
+  </div>
+  <div class="kpi kpi--amber">
+    <div class="kpi-label">Overall Data Quality</div>
+    <div class="kpi-value">51.1%</div>
+    <div class="kpi-sub">avg field completeness</div>
+  </div>
+  <div class="kpi kpi--red">
+    <div class="kpi-label">FWBS Gap</div>
+    <div class="kpi-value">87.9%</div>
+    <div class="kpi-sub">tags without real FWBS</div>
+  </div>
+  <div class="kpi kpi--red">
+    <div class="kpi-label">Config Readiness</div>
+    <div class="kpi-value">28%</div>
+    <div class="kpi-sub">SWC with Initial MHR</div>
+  </div>
+  <div class="kpi kpi--green">
+    <div class="kpi-label">Total Scope</div>
+    <div class="kpi-value">113.4M</div>
+    <div class="kpi-sub">manhours</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('tag-health')">Tag Health</button>
+  <button class="tab" onclick="showTab('config-ready')">Config Readiness</button>
+  <button class="tab" onclick="showTab('contractor-score')">Contractor Score</button>
+  <button class="tab" onclick="showTab('key-issues')">Key Issues</button>
+</div>
+
+<!-- TAB 1: TAG HEALTH -->
+<div id="tag-health" class="tab-content active">
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">Tag Population Health — Completeness Heatmap</span>
+    <span class="section-desc">Color = fill rate: <span style="color:var(--green)">■</span> >90% <span style="color:#fbbf24">■</span> 50-90% <span style="color:var(--red)">■</span> <50%</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table class="heatmap" id="heatmap-table">
+    <thead><tr>
+      <th>Discipline</th><th>Tags</th>
+      <th>Descript.</th><th>GWBS</th><th>FWBS</th><th>Drawing</th>
+      <th>Typecode</th><th>Unit Code</th><th>Parent Tag</th><th>Source</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- TAB 2: CONFIG READINESS -->
+<div id="config-ready" class="tab-content">
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">Configuration Readiness — Data Readiness Score by Contractor</span>
+  </div>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:16px">
+    Shows how many Sub Work Classes have Initial Manhours and Target Quantities filled in. 
+    Without these, progress calculation is incorrect — the S-curve lies.
+  </p>
+  <div class="contractor-grid" id="config-cards"></div>
+</div>
+
+<div class="section" style="margin-top:24px">
+  <div class="section-header">
+    <span class="section-num">02b</span>
+    <span class="section-title">SWC Assignment Gap</span>
+  </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi kpi--blue">
+      <div class="kpi-label">Total Tag-SWC Records</div>
+      <div class="kpi-value">878,883</div>
+    </div>
+    <div class="kpi kpi--red">
+      <div class="kpi-label">Tags Without SWC</div>
+      <div class="kpi-value">145,059</div>
+      <div class="kpi-sub">16.5% — progress not tracked</div>
+    </div>
+    <div class="kpi kpi--amber">
+      <div class="kpi-label">Tags Without Contract</div>
+      <div class="kpi-value">593,541</div>
+      <div class="kpi-sub">92.5% of total tags</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TAB 3: CONTRACTOR SCORE -->
+<div id="contractor-score" class="tab-content">
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">Contractor Data Score — Tag Quality by Contract</span>
+  </div>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:16px">
+    Combined score based on completeness of Tag Description, GWBS, FWBS, and Drawing fields 
+    for tags assigned to each contractor.
+  </p>
+  <div style="overflow-x:auto">
+  <table class="score-table" id="score-table">
+    <thead><tr>
+      <th>Contractor</th><th>Tags</th><th>Description</th><th>GWBS</th>
+      <th>FWBS</th><th>Drawing</th><th>Avg Score</th><th>Status</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- TAB 4: KEY ISSUES -->
+<div id="key-issues" class="tab-content">
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">Key Issues — Critical Data Gaps</span>
+  </div>
+  <div class="issues-grid">
+    <div class="issue-card">
+      <div class="issue-val">564,137</div>
+      <div class="issue-label">Tags without real FWBS</div>
+      <div class="issue-pct">87.9% of all tags · includes 268K "NASUBSYS" placeholders</div>
+    </div>
+    <div class="issue-card">
+      <div class="issue-val">156,691</div>
+      <div class="issue-label">Tags without Drawing</div>
+      <div class="issue-pct">24.4% · worst: Telecom (85%), Cathodic Prot. (61%)</div>
+    </div>
+    <div class="issue-card">
+      <div class="issue-val">124,601</div>
+      <div class="issue-label">Tags without GWBS</div>
+      <div class="issue-pct">19.4% · worst: Electrical (42%)</div>
+    </div>
+    <div class="issue-card warn">
+      <div class="issue-val">145,059</div>
+      <div class="issue-label">Tags without Sub Work Class</div>
+      <div class="issue-pct">16.5% · progress not tracked for these</div>
+    </div>
+    <div class="issue-card warn">
+      <div class="issue-val">35,522</div>
+      <div class="issue-label">SWC without Initial Manhours</div>
+      <div class="issue-pct">72% of all SWC · progress formula broken</div>
+    </div>
+    <div class="issue-card info">
+      <div class="issue-val">2,261</div>
+      <div class="issue-label">Tags: Parent = Self</div>
+      <div class="issue-pct">Self-referencing parent tags</div>
+    </div>
+    <div class="issue-card info">
+      <div class="issue-val">4,190</div>
+      <div class="issue-label">Tags without Description</div>
+      <div class="issue-pct">0.7% · worst: Telecom (72%)</div>
+    </div>
+    <div class="issue-card info">
+      <div class="issue-val">276</div>
+      <div class="issue-label">Tags without Discipline Code</div>
+      <div class="issue-pct">Cannot be categorized</div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div><!-- container -->
+
+<div class="footer">
+  <p>Engineering Data Quality Dashboard · Built with Python + Power BI · Artem Kustov · EPC Data & Automation</p>
+</div>
+
+<script>
+// ============================================================
+// DATA (anonymized from real LNG megaproject, 641K tags)
+// ============================================================
+const DATA = {
+  disciplines: [
+    {d:"Piping",code:23,count:121543,desc:100,gwbs:100,fwbs:2.4,dwg:100,tc:0,uc:0,pt:100,src:100},
+    {d:"Electrical",code:15,count:184601,desc:98.9,gwbs:58.3,fwbs:22.6,dwg:58,tc:0,uc:0,pt:13.6,src:100},
+    {d:"Instrumentation",code:13,count:161038,desc:100,gwbs:86.7,fwbs:0.9,dwg:86,tc:0,uc:0,pt:44.5,src:100},
+    {d:"Cathodic Prot.",code:16,count:64721,desc:100,gwbs:65.3,fwbs:15.9,dwg:38.6,tc:0,uc:0,pt:0,src:100},
+    {d:"Mechanical",code:17,count:43032,desc:100,gwbs:100,fwbs:0.9,dwg:98.7,tc:0.1,uc:0.1,pt:38.9,src:100},
+    {d:"Structural",code:20,count:35935,desc:100,gwbs:94.6,fwbs:28.8,dwg:92.4,tc:24.4,uc:52.1,pt:34,src:94.8},
+    {d:"Paint/Insulation",code:68,count:13661,desc:99.9,gwbs:87,fwbs:30.8,dwg:22.8,tc:0,uc:0,pt:11.2,src:100},
+    {d:"Civil",code:14,count:9105,desc:100,gwbs:100,fwbs:6.3,dwg:95.4,tc:0,uc:0,pt:28.4,src:100},
+    {d:"Completion",code:90,count:4380,desc:100,gwbs:99.9,fwbs:99.9,dwg:98.2,tc:0,uc:0,pt:53.3,src:100},
+    {d:"Telecom",code:18,count:2907,desc:28.2,gwbs:100,fwbs:25.6,dwg:15.3,tc:0,uc:0,pt:2.9,src:30.7},
+    {d:"Pre-comm",code:98,count:238,desc:100,gwbs:100,fwbs:100,dwg:87,tc:0,uc:0,pt:10.1,src:100},
+  ],
+  configReadiness: [
+    {c:"Contractor G",swc:982,miss_mhr:36,miss_tgt:36,pct:96.3},
+    {c:"Contractor H",swc:268,miss_mhr:69,miss_tgt:50,pct:74.3},
+    {c:"Contractor A",swc:896,miss_mhr:303,miss_tgt:300,pct:66.2},
+    {c:"Contractor F",swc:3987,miss_mhr:1848,miss_tgt:1862,pct:53.6},
+    {c:"Contractor C1",swc:12589,miss_mhr:7199,miss_tgt:7097,pct:42.8},
+    {c:"Contractor C2",swc:12253,miss_mhr:8208,miss_tgt:8157,pct:33.0},
+    {c:"Contractor C3",swc:9601,miss_mhr:9168,miss_tgt:9189,pct:4.5},
+    {c:"Contractor C4",swc:8744,miss_mhr:8691,miss_tgt:8684,pct:0.6},
+  ],
+  contractorScores: [
+    {c:"Contractor G",code:"HBK",tags:3875,desc:100,gwbs:100,fwbs:99.9,dwg:100,avg:100},
+    {c:"Contractor C4",code:"CCC-FCW",tags:913,desc:100,gwbs:100,fwbs:90.7,dwg:100,avg:97.7},
+    {c:"Contractor C1",code:"CCC-PROC",tags:10479,desc:100,gwbs:100,fwbs:2.3,dwg:99.7,avg:75.5},
+    {c:"Contractor C2",code:"CCC-POFF",tags:9464,desc:100,gwbs:100,fwbs:0.6,dwg:99.9,avg:75.1},
+    {c:"Contractor C3",code:"CCC-BLDG",tags:1016,desc:100,gwbs:100,fwbs:0,dwg:100,avg:75},
+    {c:"Contractor A",code:"ACC",tags:13233,desc:100,gwbs:100,fwbs:0,dwg:99.7,avg:74.9},
+    {c:"Contractor F",code:"GAC",tags:8748,desc:100,gwbs:100,fwbs:0.8,dwg:99.9,avg:75.2},
+    {c:"Contractor E",code:"ELS",tags:172,desc:100,gwbs:100,fwbs:0,dwg:100,avg:75},
+  ]
+};
+
+// ============================================================
+// HELPERS
+// ============================================================
+function heatClass(v){
+  if(v>=90) return 'h-green';
+  if(v>=70) return 'h-lgreen';
+  if(v>=50) return 'h-yellow';
+  if(v>=20) return 'h-orange';
+  if(v>0) return 'h-red';
+  return 'h-dgrey';
+}
+function fmt(n){return n.toLocaleString()}
+function badgeClass(pct){
+  if(pct>=70) return 'badge-green';
+  if(pct>=40) return 'badge-amber';
+  return 'badge-red';
+}
+function barColor(pct){
+  if(pct>=70) return 'var(--green)';
+  if(pct>=40) return 'var(--amber)';
+  return 'var(--red)';
+}
+function trafficClass(pct){
+  if(pct>=70) return 'traffic-g';
+  if(pct>=40) return 'traffic-a';
+  return 'traffic-r';
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ============================================================
+// RENDER HEATMAP
+// ============================================================
+function renderHeatmap(){
+  const tbody = document.querySelector('#heatmap-table tbody');
+  const fields = ['desc','gwbs','fwbs','dwg','tc','uc','pt','src'];
+  DATA.disciplines.forEach(d=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${d.d} <span class="count">(${fmt(d.count)})</span></td>
+      <td class="count">${fmt(d.count)}</td>` +
+      fields.map(f=>`<td class="${heatClass(d[f])}">${d[f].toFixed(1)}%</td>`).join('');
+    tbody.appendChild(tr);
+  });
+  // Overall row
+  const overall = {desc:99.3,gwbs:80.6,fwbs:12.1,dwg:75.6,tc:1.4,uc:2.9,pt:39.6,src:99.4};
+  const tr = document.createElement('tr');
+  tr.style.fontWeight='700';
+  tr.style.borderTop='2px solid var(--border2)';
+  tr.innerHTML = `<td>OVERALL</td><td class="count">641,441</td>` +
+    fields.map(f=>`<td class="${heatClass(overall[f])}" style="font-weight:700">${overall[f].toFixed(1)}%</td>`).join('');
+  tbody.appendChild(tr);
+}
+
+// ============================================================
+// RENDER CONFIG READINESS CARDS
+// ============================================================
+function renderConfig(){
+  const container = document.getElementById('config-cards');
+  DATA.configReadiness.forEach(c=>{
+    const card = document.createElement('div');
+    card.className = 'c-card';
+    card.innerHTML = `
+      <div class="c-card-header">
+        <span class="c-card-name">${c.c}</span>
+        <span class="c-card-badge ${badgeClass(c.pct)}">${c.pct.toFixed(1)}%</span>
+      </div>
+      <div class="c-card-bar">
+        <div class="c-card-fill" style="width:${c.pct}%;background:${barColor(c.pct)}"></div>
+      </div>
+      <div class="c-card-stats">
+        <span>Total SWC:</span><span class="val">${fmt(c.swc)}</span>
+        <span>Missing MHR:</span><span class="val" style="color:${c.miss_mhr>100?'var(--red)':'var(--text)'}">${fmt(c.miss_mhr)}</span>
+        <span>Missing Target Qty:</span><span class="val" style="color:${c.miss_tgt>100?'var(--red)':'var(--text)'}">${fmt(c.miss_tgt)}</span>
+        <span>Readiness:</span><span class="val" style="color:${barColor(c.pct)}">${c.pct >= 70 ? 'Ready' : c.pct >= 40 ? 'Partial' : 'Not Ready'}</span>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+// ============================================================
+// RENDER CONTRACTOR SCORE TABLE
+// ============================================================
+function renderScores(){
+  const tbody = document.querySelector('#score-table tbody');
+  DATA.contractorScores.sort((a,b)=>b.avg-a.avg).forEach(c=>{
+    const tr = document.createElement('tr');
+    const fields = ['desc','gwbs','fwbs','dwg'];
+    tr.innerHTML = `
+      <td><span class="traffic ${trafficClass(c.avg)}"></span>${c.c}</td>
+      <td style="font-family:var(--mono);color:var(--text2)">${fmt(c.tags)}</td>
+      ${fields.map(f=>`<td class="score-cell ${heatClass(c[f])}">${c[f].toFixed(1)}%</td>`).join('')}
+      <td class="score-cell" style="font-size:14px;color:${barColor(c.avg)}">${c.avg.toFixed(1)}%</td>
+      <td><span class="c-card-badge ${badgeClass(c.avg)}">${c.avg>=90?'GOOD':c.avg>=60?'PARTIAL':'ACTION NEEDED'}</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderHeatmap();
+renderConfig();
+renderScores();
+</script>
+</body>
+</html>
