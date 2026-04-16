@@ -41,11 +41,11 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
 /* HERO */
 .hero{padding:140px 0 80px;position:relative}
 .hero-tag{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
-.hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-1px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-1px;max-width:980px}
 .hero h1 .highlight{background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:17px;color:var(--text2);max-width:600px;line-height:1.7;margin-bottom:32px;font-weight:400}
+.hero-sub{font-size:17px;color:var(--text2);max-width:640px;line-height:1.7;margin-bottom:32px;font-weight:400}
 .hero-stats{display:flex;gap:40px;flex-wrap:wrap}
-.stat{border-left:2px solid var(--border2);padding-left:16px}
+.stat{border-left:2px solid var(--border2);padding-left:16px;min-width:118px}
 .stat-val{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--text)}
 .stat-label{font-size:12px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px}
 
@@ -54,7 +54,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
 .section-line{width:40px;height:2px;background:var(--accent);margin-bottom:12px}
 .section-tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
 .section-title{font-size:28px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
-.section-desc{font-size:14px;color:var(--text2);margin-bottom:40px;max-width:600px}
+.section-desc{font-size:14px;color:var(--text2);margin-bottom:40px;max-width:720px}
 
 /* CASE STUDY */
 .case{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:32px;overflow:hidden;transition:border-color 0.3s}
@@ -70,11 +70,12 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
 
 .case-body{padding:24px 32px 32px}
 .case-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-@media(max-width:700px){.case-grid{grid-template-columns:1fr}}
-
 .case-section{margin-bottom:20px}
 .case-section-title{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
 .case-section p{font-size:14px;color:var(--text2);line-height:1.7}
+.scope-list{display:grid;gap:10px}
+.scope-item-title{font-size:14px;font-weight:700;color:var(--text)}
+.scope-item-text{font-size:14px;color:var(--text2);line-height:1.7}
 
 .case-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:20px}
 .metric{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center}
@@ -93,19 +94,59 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
 .vis-fill{height:100%;border-radius:4px}
 .vis-val{width:45px;font-size:11px;text-align:right}
 
-.case-links{display:flex;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+.case-links{display:flex;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
 .case-link{font-family:var(--mono);font-size:12px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(88,166,255,0.2);border-radius:6px;transition:all 0.2s}
 .case-link:hover{background:var(--accent-bg);border-color:var(--accent)}
-
-/* TOOLS STACK */
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.tool-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px}
-.tool-card-title{font-size:13px;font-weight:600;margin-bottom:4px}
-.tool-card-desc{font-size:12px;color:var(--text3);line-height:1.5}
 
 /* TECH STACK */
 .tech-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
 .tech-tag{font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:6px;background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+
+/* EXPERIENCE */
+.exp-intro{
+  margin-top:12px;
+  margin-bottom:28px;
+  max-width:940px;
+  font-size:15px;
+  line-height:1.8;
+  color:var(--text2);
+}
+.exp-entry{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:22px;
+  align-items:start;
+  margin-bottom:26px;
+}
+.exp-year{
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:600;
+  color:var(--accent);
+  line-height:1.4;
+  padding-top:3px;
+  white-space:nowrap;
+}
+.exp-year.muted{color:var(--text3)}
+.exp-role{
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  line-height:1.45;
+  margin-bottom:4px;
+}
+.exp-meta{
+  font-size:14px;
+  color:var(--text2);
+  line-height:1.65;
+  margin-bottom:6px;
+}
+.exp-note{
+  font-size:14px;
+  color:var(--text2);
+  line-height:1.8;
+  max-width:860px;
+}
 
 /* CONTACT */
 .contact{padding:60px 0;border-top:1px solid var(--border)}
@@ -120,6 +161,25 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
 /* FADE IN */
 .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
 .fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .hero{padding:124px 0 70px}
+  .hero-sub{font-size:16px}
+  .case-grid{grid-template-columns:1fr}
+  .hero-stats{gap:22px}
+  .stat{min-width:unset}
+  .exp-entry{
+    grid-template-columns:1fr;
+    gap:6px;
+    margin-bottom:22px;
+  }
+  .exp-year{
+    padding-top:0;
+    font-size:12px;
+  }
+  .exp-role{font-size:15px}
+  .exp-meta,.exp-note,.exp-intro{font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -135,10 +195,9 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-tag">EPC Data & Automation</div>
+    <div class="hero-tag">EPC Data &amp; Automation</div>
     <h1>I build tools and workflows that show<br>whether your <span class="highlight">engineering data can be trusted</span></h1>
     <p class="hero-sub">I work at the intersection of engineering data, reporting, and automation — improving data quality, reducing manual effort, and making LNG/EPC reporting more reliable.</p>
     <div class="hero-stats">
@@ -155,14 +214,13 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
         <div class="stat-label">Saved per week</div>
       </div>
       <div class="stat">
-        <div class="stat-val">multi-billion LNG project</div>
-        <div class="stat-label">Project value</div>
+        <div class="stat-val">multi-billion</div>
+        <div class="stat-label">LNG project scale</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CASES -->
 <section id="cases" class="section">
   <div class="container">
     <div class="section-line"></div>
@@ -170,13 +228,12 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
     <div class="section-title">Selected Work</div>
     <div class="section-desc">Examples of EPC data validation, reporting automation, and engineering data quality workflows — including deployed solutions and public-safe portfolio demonstrations.</div>
 
-    <!-- CASE 1: C3 UPDATER -->
     <div class="case fade-in">
       <div class="case-header">
         <div style="display:flex;align-items:flex-start">
           <span class="case-num">01</span>
           <div class="case-title-block">
-            <div class="case-title">C3 Updater — Progress Validation & Update Workflow</div>
+            <div class="case-title">C3 Updater — Progress Validation &amp; Update Workflow</div>
             <div class="case-subtitle">Python-based workflow for subcontractor C3 validation, tag reconciliation, and EasyPlant update preparation</div>
           </div>
         </div>
@@ -205,7 +262,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
           </div>
           <div>
             <div class="case-visual">
-              <div class="case-visual-title">System Components (v2.11)</div>
+              <div class="case-visual-title">System Components (current deployed version)</div>
               <div style="padding:8px 0">
                 <div style="color:var(--accent);margin-bottom:8px">▸ Update Engine</div>
                 <div style="color:var(--text3);padding-left:16px;margin-bottom:4px">Match Easy ↔ Sub files by tag + step</div>
@@ -227,29 +284,21 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
         <div class="case-metrics">
           <div class="metric"><div class="metric-val green">16→2h</div><div class="metric-label">Weekly time saved</div></div>
           <div class="metric"><div class="metric-val accent">9</div><div class="metric-label">Subcontractors</div></div>
-          <div class="metric"><div class="metric-val accent">v2.11</div><div class="metric-label">Current version</div></div>
-          <div class="metric"><div class="metric-val green">Production</div><div class="metric-label">Status</div></div>
+          <div class="metric"><div class="metric-val accent">deployed</div><div class="metric-label">Workflow status</div></div>
+          <div class="metric"><div class="metric-val green">Production</div><div class="metric-label">Environment</div></div>
         </div>
         <div class="case-links">
-          <a href="https://github.com/YOUR_GITHUB/c3-updater" class="case-link" target="_blank">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            GitHub Repository
-          </a>
-          <a href="#" class="case-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 012.5 1h11A1.5 1.5 0 0115 2.5v11a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 011 13.5v-11zM4 5h8v1H4V5zm0 3h8v1H4V8zm0 3h5v1H4v-1z"/></svg>
-            README & Documentation
-          </a>
+          <a href="https://github.com/Art-Kustuff/c3-updater" class="case-link" target="_blank">GitHub Repository</a>
         </div>
       </div>
     </div>
 
-    <!-- CASE 2: DATA QUALITY TOOLKIT -->
     <div class="case fade-in">
       <div class="case-header">
         <div style="display:flex;align-items:flex-start">
           <span class="case-num">02</span>
           <div class="case-title-block">
-            <div class="case-title">Tag Data Quality Monitoring & Validation Framework</div>
+            <div class="case-title">Tag Data Quality Monitoring &amp; Validation Framework</div>
             <div class="case-subtitle">Validation and monitoring logic for tag register completeness, consistency, and reporting readiness</div>
           </div>
         </div>
@@ -269,15 +318,29 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
             </div>
             <div class="case-section">
               <div class="case-section-title">Scope</div>
-              <p><strong>■Tag Register Validator:</strong> checks mandatory fields, placeholders, duplicates, parent references, naming consistency, and status mismatches.</p>
-              <p><strong>■Weekly Health Check:</strong> compares snapshots to track improvements, regressions, and completeness change over time.</p>
-              <p><strong>■FWBS Suggestion Logic:</strong> generates controlled review suggestions based on existing pattern logic rather than direct automated updates.</p>
-              <p><strong>■Planning Setup Review:</strong> checks WC/SWC configuration for quantity without manhours, Current Qty above Target Qty, and negative balance conditions that affect reporting reliability.</p>
+              <div class="scope-list">
+                <div>
+                  <div class="scope-item-title">Tag Register Validator</div>
+                  <div class="scope-item-text">Checks mandatory fields, placeholders, duplicates, parent references, naming consistency, and status mismatches.</div>
+                </div>
+                <div>
+                  <div class="scope-item-title">Weekly Health Check</div>
+                  <div class="scope-item-text">Compares snapshots to track improvements, regressions, and completeness change over time.</div>
+                </div>
+                <div>
+                  <div class="scope-item-title">FWBS Suggestion Logic</div>
+                  <div class="scope-item-text">Generates controlled review suggestions based on existing pattern logic rather than direct automated updates.</div>
+                </div>
+                <div>
+                  <div class="scope-item-title">Planning Setup Review</div>
+                  <div class="scope-item-text">Checks WC/SWC configuration for quantity without manhours, Current Qty above Target Qty, and negative balance conditions that affect reporting reliability.</div>
+                </div>
+              </div>
             </div>
           </div>
           <div>
             <div class="case-visual">
-              <div class="case-visual-title">Tag Completeness by Discipline</div>
+              <div class="case-visual-title">GWBS Completeness by Discipline</div>
               <div style="padding:4px 0">
                 <div class="vis-row"><span class="vis-label">Piping</span><div class="vis-bar"><div class="vis-fill" style="width:100%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">100%</span></div>
                 <div class="vis-row"><span class="vis-label">Civil</span><div class="vis-bar"><div class="vis-fill" style="width:100%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">100%</span></div>
@@ -291,12 +354,12 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
                 <div class="vis-row"><span class="vis-label">Insulation</span><div class="vis-bar"><div class="vis-fill" style="width:87%;background:var(--accent)"></div></div><span class="vis-val" style="color:var(--accent)">87%</span></div>
               </div>
               <div style="margin-top:12px;padding-top:8px;border-top:1px solid var(--border);font-size:10px;color:var(--text3)">
-                Illustrative GWBS completeness distribution (anonymized for public portfolio use)
+                Illustrative anonymized distribution for public portfolio use
               </div>
             </div>
             <div class="case-visual" style="margin-top:12px">
               <div class="case-visual-title">Key Finding</div>
-              <div style="font-size:28px;font-weight:700;color:var(--red);font-family:var(--mono)">80%</div>
+              <div style="font-size:28px;font-weight:700;color:var(--red);font-family:var(--mono)">80%+</div>
               <div style="color:var(--text2);margin-top:4px">of records lacked meaningful FWBS assignment</div>
               <div style="color:var(--text3);margin-top:2px;font-size:10px">despite appearing filled in standard views</div>
             </div>
@@ -306,28 +369,21 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
           <div class="metric"><div class="metric-val accent">600K+</div><div class="metric-label">Records analyzed</div></div>
           <div class="metric"><div class="metric-val red">100K+</div><div class="metric-label">Issues flagged</div></div>
           <div class="metric"><div class="metric-val amber">4</div><div class="metric-label">Validation areas</div></div>
-          <div class="metric"><div class="metric-val green"><1min</div><div class="metric-label">Full scan time</div></div>
+          <div class="metric"><div class="metric-val green">&lt;1 min</div><div class="metric-label">Scan time</div></div>
         </div>
         <div class="case-links">
-          <a href="https://github.com/YOUR_GITHUB/epc-data-toolkit" class="case-link" target="_blank">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            GitHub Repository
-          </a>
-          <a href="Engineering_Data_Quality_Dashboard.html" class="case-link" target="_blank">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.5A1.5 1.5 0 011.5 0h13A1.5 1.5 0 0116 1.5v13a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 010 14.5v-13zM1.5 1a.5.5 0 00-.5.5V5h15V1.5a.5.5 0 00-.5-.5h-13zM1 14.5a.5.5 0 00.5.5H5V6H1v8.5zM6 15h9.5a.5.5 0 00.5-.5V6H6v9z"/></svg>
-            Interactive Dashboard
-          </a>
+          <a href="https://github.com/Art-Kustuff/epc-data-toolkit" class="case-link" target="_blank">GitHub Repository</a>
+          <a href="Engineering_Data_Quality_Dashboard.html" class="case-link" target="_blank">Interactive Dashboard</a>
         </div>
       </div>
     </div>
 
-    <!-- CASE 3: PIPELINE & DASHBOARD -->
     <div class="case fade-in">
       <div class="case-header">
         <div style="display:flex;align-items:flex-start">
           <span class="case-num">03</span>
           <div class="case-title-block">
-            <div class="case-title">Proposed Data Validation Pipeline & Reporting Refresh</div>
+            <div class="case-title">Proposed Data Validation Pipeline &amp; Reporting Refresh</div>
             <div class="case-subtitle">Architecture concept for automated extraction, validation, and reporting refresh</div>
           </div>
         </div>
@@ -345,7 +401,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
             <div class="case-section">
               <div class="case-section-title">Architecture Concept</div>
               <p>Proposed architecture for improving reporting reliability by validating engineering data before dashboard refresh. The idea is to extract structured project data, run checks upstream, and feed cleaner datasets into reporting layers.</p>
-              <p>Typical inputs: tag register, contract assignment, SWC assignment, and planning setup data</p>
+              <p>Typical inputs: tag register, contract assignment, SWC assignment, and planning setup data.</p>
             </div>
             <div class="case-section">
               <div class="case-section-title">Architecture</div>
@@ -357,12 +413,12 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
             </div>
             <div class="case-section">
               <div class="case-section-title">Value</div>
-              <p>Reduces the risk of unreliable data reaching dashboards and management reporting.<p>
+              <p>Reduces the risk of unreliable data reaching dashboards and management reporting.</p>
             </div>
           </div>
           <div>
             <div class="case-visual">
-              <div class="case-visual-title">Dashboard: Data Trust Score by Contractor</div>
+              <div class="case-visual-title">Illustrative Contractor Data Trust View</div>
               <div style="padding:4px 0">
                 <div class="vis-row"><span class="vis-label" style="width:90px">Contr. G</span><div class="vis-bar"><div class="vis-fill" style="width:96%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">96.3%</span></div>
                 <div class="vis-row"><span class="vis-label" style="width:90px">Contr. H</span><div class="vis-bar"><div class="vis-fill" style="width:74%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">74.3%</span></div>
@@ -373,7 +429,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
                 <div class="vis-row"><span class="vis-label" style="width:90px">Contr. C3</span><div class="vis-bar"><div class="vis-fill" style="width:5%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">4.5%</span></div>
                 <div class="vis-row"><span class="vis-label" style="width:90px">Contr. C4</span><div class="vis-bar"><div class="vis-fill" style="width:1%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">0.6%</span></div>
               </div>
-              <div style="margin-top:8px;font-size:10px;color:var(--text3)">SWC configuration readiness — % with Initial MHR filled (anonymized for public portfolio use)</div>
+              <div style="margin-top:8px;font-size:10px;color:var(--text3)">Illustrative configuration readiness view (anonymized for public portfolio use)</div>
             </div>
             <div class="case-visual" style="margin-top:12px">
               <div class="case-visual-title">Pipeline Flow</div>
@@ -390,23 +446,19 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
           </div>
         </div>
         <div class="case-links">
-          <a href="https://github.com/YOUR_GITHUB/epc-dashboard-pipeline" class="case-link" target="_blank">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            GitHub Repository
-          </a>
+          <a href="https://github.com/Art-Kustuff/epc-data-toolkit" class="case-link" target="_blank">GitHub Repository</a>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- TECH STACK -->
 <section id="stack" class="section" style="border-top:1px solid var(--border)">
   <div class="container">
     <div class="section-line"></div>
     <div class="section-tag">Technology</div>
     <div class="section-title">Tech Stack</div>
+
     <div class="tech-row" style="margin-top:24px">
       <span class="tech-tag">Python</span>
       <span class="tech-tag">Power BI / DAX</span>
@@ -418,6 +470,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       <span class="tech-tag">Primavera P6</span>
       <span class="tech-tag">Git / GitHub</span>
     </div>
+
     <div class="section-tag" style="margin-top:32px">Domain</div>
     <div class="tech-row" style="margin-top:8px">
       <span class="tech-tag">Progress Measurement</span>
@@ -427,15 +480,20 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       <span class="tech-tag">EPC / LNG Megaprojects</span>
       <span class="tech-tag">Subcontractor Coordination</span>
     </div>
+
     <div class="section-tag" style="margin-top:32px">Experience</div>
-  <div class="exp-intro">Started in field-facing automation and project execution roles, then moved into systems completion, reporting leadership, and engineering data workflows on LNG / EPC projects.</div>
+    <div class="exp-intro">
+      Started in field-facing automation and project execution roles, then moved into systems completion, reporting leadership, and engineering data workflows on LNG / EPC projects.
+    </div>
 
     <div class="exp-entry">
       <span class="exp-year">2025—now</span>
       <div>
-        <div class="exp-role">Progress & Data Specialist — Technip Energies</div>
+        <div class="exp-role">Progress &amp; Data Specialist — Technip Energies</div>
         <div class="exp-meta">Doha, Qatar · EasyPlant workflows, reporting validation, dashboards, automation</div>
-        <div class="exp-note">Engineering and progress data workflows, contractor data reconciliation, KPI reporting, dashboard logic, and reporting automation in a major LNG EPC environment.</div>
+        <div class="exp-note">
+          Engineering and progress data workflows, contractor data reconciliation, KPI reporting, dashboard logic, and reporting automation in a major LNG EPC environment.
+        </div>
       </div>
     </div>
 
@@ -444,7 +502,9 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       <div>
         <div class="exp-role">Progress Measurement Coordinator — Novarctic SNC</div>
         <div class="exp-meta">LNG / EPC construction · systems completion, P6 validation, management reporting</div>
-        <div class="exp-note">Completion management structures, schedule-progress validation, reporting workflows, and coordination with planning and project teams.</div>
+        <div class="exp-note">
+          Completion management structures, schedule-progress validation, reporting workflows, and coordination with planning and project teams.
+        </div>
       </div>
     </div>
 
@@ -453,7 +513,9 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       <div>
         <div class="exp-role">Progress Measurement Reporting Lead — Novarctic SNC</div>
         <div class="exp-meta">LNG / EPC construction · reporting leadership, training, workflow design</div>
-        <div class="exp-note">Led reporting support across Safety, Quality, Project Controls, Planning, and Progress; developed training materials and structured reporting processes.</div>
+        <div class="exp-note">
+          Led reporting support across Safety, Quality, Project Controls, Planning, and Progress; developed training materials and structured reporting processes.
+        </div>
       </div>
     </div>
 
@@ -462,7 +524,9 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       <div>
         <div class="exp-role">Supervisor ICSS / UCP — Novarctic SNC</div>
         <div class="exp-meta">LNG / EPC construction · site execution, systems interfaces, multidisciplinary coordination</div>
-        <div class="exp-note">Closer to field and execution scope — interface work, supervision, and system-related coordination in construction and commissioning environment.</div>
+        <div class="exp-note">
+          Closer to field and execution scope — interface work, supervision, and system-related coordination in construction and commissioning environment.
+        </div>
       </div>
     </div>
 
@@ -470,14 +534,15 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       <span class="exp-year muted">2018—2022</span>
       <div>
         <div class="exp-role">Automation Engineer — Gazpromneft-Automation</div>
-        <div class="exp-meta">Tyumen, Russia · industrial automation, technical documentation, Oil & Gas delivery</div>
-        <div class="exp-note">Early engineering foundation in industrial automation, documentation, and project execution — the starting point before moving into LNG completions, reporting, and engineering data.</div>
+        <div class="exp-meta">Tyumen, Russia · industrial automation, technical documentation, Oil &amp; Gas delivery</div>
+        <div class="exp-note">
+          Early engineering foundation in industrial automation, documentation, and project execution — the starting point before moving into LNG completions, reporting, and engineering data.
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact" class="contact">
   <div class="container">
     <div class="section-line"></div>
@@ -493,11 +558,10 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
 </section>
 
 <div class="footer">
-  <p>Artem Kustov · EPC Data & Reporting Portfolio · 2026</p>
+  <p>Artem Kustov · EPC Data &amp; Reporting Portfolio · 2026</p>
 </div>
 
 <script>
-// Fade-in on scroll
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
 }, { threshold: 0.1 });
