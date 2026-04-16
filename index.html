@@ -256,7 +256,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
         <div class="case-badges">
           <span class="badge">Python</span>
           <span class="badge">Power BI</span>
-          <span class="badge">641K Tags</span>
+          <span class="badge">Tag Data Quality</span>
           <span class="badge">Deployed Checks</span>
         </div>
       </div>
@@ -265,19 +265,19 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
           <div>
             <div class="case-section">
               <div class="case-section-title">Problem</div>
-              <p>641,441 equipment tags across 13 disciplines. EasyPlant shows field counts but doesn't catch placeholder values (268K tags with "NASUBSYS" as FWBS — system counts them as filled, but they're not). Nobody sees the real completeness picture, and nobody tracks whether data quality improves or degrades week over week.</p>
+              <p>Standard system views can show fields as filled while masking placeholder values, incomplete breakdown assignments, and hidden data quality gaps across disciplines. As a result, the reported completeness picture may look stronger than the underlying engineering data actually is.</p>
             </div>
             <div class="case-section">
               <div class="case-section-title">Scope</div>
-              <p><strong>Tag Register Validator:</strong> quality checks for mandatory fields, placeholders, duplicates, parent self-references, naming consistency, and status mismatches. Output is a severity-based Excel exception report.</p>
-              <p><strong>Weekly Health Check:</strong> compares two Tag Register snapshots to show improvements, regressions, and change by discipline over time.</p>
-              <p><strong>FWBS Suggestion Logic:</strong> uses existing GWBS→FWBS patterns to generate controlled suggestions for engineer review, rather than direct automated updates.</p>
+              <p><strong>Tag Register Validator:</strong> checks mandatory fields, placeholders, duplicates, parent references, naming consistency, and status mismatches.</p>
+              <p><strong>Weekly Health Check:</strong> compares snapshots to track improvements, regressions, and completeness change over time.</p>
+              <p><strong>FWBS Suggestion Logic:</strong> generates controlled review suggestions based on existing pattern logic rather than direct automated updates.</p>
               <p><strong>Planning Setup Review:</strong> checks WC/SWC configuration for quantity without manhours, Current Qty above Target Qty, and negative balance conditions that affect reporting reliability.</p>
             </div>
           </div>
           <div>
             <div class="case-visual">
-              <div class="case-visual-title">Tag Completeness by Discipline</div>
+              <div class="case-visual-title">Tag Completeness by Discipline (Illustrative anonymized distribution) </div>
               <div style="padding:4px 0">
                 <div class="vis-row"><span class="vis-label">Piping</span><div class="vis-bar"><div class="vis-fill" style="width:100%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">100%</span></div>
                 <div class="vis-row"><span class="vis-label">Civil</span><div class="vis-bar"><div class="vis-fill" style="width:100%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">100%</span></div>
@@ -285,10 +285,10 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
                 <div class="vis-row"><span class="vis-label">Instruments</span><div class="vis-bar"><div class="vis-fill" style="width:87%;background:var(--accent)"></div></div><span class="vis-val" style="color:var(--accent)">87%</span></div>
                 <div class="vis-row"><span class="vis-label">Buildings</span><div class="vis-bar"><div class="vis-fill" style="width:95%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">95%</span></div>
                 <div class="vis-row"><span class="vis-label">Electrical</span><div class="vis-bar"><div class="vis-fill" style="width:58%;background:var(--amber)"></div></div><span class="vis-val" style="color:var(--amber)">58%</span></div>
-                <div class="vis-row"><span class="vis-label">Cathodic P.</span><div class="vis-bar"><div class="vis-fill" style="width:65%;background:var(--amber)"></div></div><span class="vis-val" style="color:var(--amber)">65%</span></div>
+                <div class="vis-row"><span class="vis-label">Telecom</span><div class="vis-bar"><div class="vis-fill" style="width:65%;background:var(--amber)"></div></div><span class="vis-val" style="color:var(--amber)">65%</span></div>
                 <div class="vis-row"><span class="vis-label">Painting</span><div class="vis-bar"><div class="vis-fill" style="width:87%;background:var(--accent)"></div></div><span class="vis-val" style="color:var(--accent)">87%</span></div>
                 <div class="vis-row"><span class="vis-label">Steel Str.</span><div class="vis-bar"><div class="vis-fill" style="width:100%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">100%</span></div>
-                <div class="vis-row"><span class="vis-label">Hoisting</span><div class="vis-bar"><div class="vis-fill" style="width:87%;background:var(--accent)"></div></div><span class="vis-val" style="color:var(--accent)">87%</span></div>
+                <div class="vis-row"><span class="vis-label">Insulation</span><div class="vis-bar"><div class="vis-fill" style="width:87%;background:var(--accent)"></div></div><span class="vis-val" style="color:var(--accent)">87%</span></div>
               </div>
               <div style="margin-top:12px;padding-top:8px;border-top:1px solid var(--border);font-size:10px;color:var(--text3)">
                 GWBS Code completeness (real values, excluding placeholders)
@@ -296,17 +296,17 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
             </div>
             <div class="case-visual" style="margin-top:12px">
               <div class="case-visual-title">Key Finding</div>
-              <div style="font-size:28px;font-weight:700;color:var(--red);font-family:var(--mono)">88%</div>
+              <div style="font-size:28px;font-weight:700;color:var(--red);font-family:var(--mono)">**%</div>
               <div style="color:var(--text2);margin-top:4px">of tags have no real FWBS assignment</div>
-              <div style="color:var(--text3);margin-top:2px;font-size:10px">268,484 tags have "NASUBSYS" placeholder — EasyPlant counts them as filled</div>
+              <div style="color:var(--text3);margin-top:2px;font-size:10px">A major share of records lacked meaningful FWBS assignment despite appearing filled in standard views</div>
             </div>
           </div>
         </div>
         <div class="case-metrics">
-          <div class="metric"><div class="metric-val accent">641K</div><div class="metric-label">Tags analyzed</div></div>
-          <div class="metric"><div class="metric-val red">131K</div><div class="metric-label">Issues found</div></div>
+          <div class="metric"><div class="metric-val accent">600K+</div><div class="metric-label">Tags analyzed</div></div>
+          <div class="metric"><div class="metric-val red">100K+</div><div class="metric-label">Issues found</div></div>
           <div class="metric"><div class="metric-val amber">4</div><div class="metric-label">Validation areas</div></div>
-          <div class="metric"><div class="metric-val green">30sec</div><div class="metric-label">Full scan time</div></div>
+          <div class="metric"><div class="metric-val green"><1min</div><div class="metric-label">Full scan time</div></div>
         </div>
         <div class="case-links">
           <a href="https://github.com/YOUR_GITHUB/epc-data-toolkit" class="case-link" target="_blank">
