@@ -327,7 +327,7 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
         <div style="display:flex;align-items:flex-start">
           <span class="case-num">03</span>
           <div class="case-title-block">
-            <div class="case-title">Proposed Data Validation Pipeline & Reporting Dashboard</div>
+            <div class="case-title">Proposed Data Validation Pipeline & Reporting Refresh</div>
             <div class="case-subtitle">Architecture concept for automated extraction, validation, and reporting refresh</div>
           </div>
         </div>
@@ -344,15 +344,20 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
           <div>
             <div class="case-section">
               <div class="case-section-title">Architecture Concept</div>
-              <p>This is a proposed architecture for improving reporting reliability. The idea is to extract tag and configuration data, run validation checks before refresh, and feed cleaner datasets into Power BI so reporting is supported by stronger data controls.</p>
+              <p>Proposed architecture for improving reporting reliability by validating engineering data before dashboard refresh. The idea is to extract structured project data, run checks upstream, and feed cleaner datasets into reporting layers.</p>
+              <p>Typical inputs: tag register, contract assignment, SWC assignment, and planning setup data</p>
             </div>
             <div class="case-section">
               <div class="case-section-title">Architecture</div>
-              <p><strong>Step 1:</strong> Python connects to EasyPlant DB via ODBC, pulls Tag Register, Contract Assignment, Planning Setup tables.</p>
-              <p><strong>Step 2:</strong> Validation scripts run: check completeness, detect placeholders, score contractors, flag configuration gaps.</p>
-              <p><strong>Step 3:</strong> Clean datasets saved to shared folder with JSON summary and audit log.</p>
-              <p><strong>Step 4:</strong> Power BI scheduled refresh picks up new data. Dashboard updates automatically.</p>
-              <p><strong>Step 5:</strong> PowerShell Task Scheduler triggers pipeline every morning at 6 AM.</p>
+              <p><strong>Step 1:</strong> Python extracts structured project data from database tables or Excel exports.</p>
+              <p><strong>Step 2:</strong> Validation logic checks completeness, placeholder values, contractor readiness, and configuration gaps.</p>
+              <p><strong>Step 3:</strong> Validated datasets are saved to a shared folder together with JSON summary and audit log.</p>
+              <p><strong>Step 4:</strong> Power BI scheduled refresh picks up the prepared datasets and updates reporting automatically.</p>
+              <p><strong>Step 5:</strong> Windows Task Scheduler runs the pipeline on a daily schedule.</p>
+            </div>
+            <div class="case-section">
+              <div class="case-section-title">Value</div>
+              <p>Reduces the risk of unreliable data reaching dashboards and management reporting.<p>
             </div>
           </div>
           <div>
@@ -368,18 +373,18 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
                 <div class="vis-row"><span class="vis-label" style="width:90px">Contr. C3</span><div class="vis-bar"><div class="vis-fill" style="width:5%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">4.5%</span></div>
                 <div class="vis-row"><span class="vis-label" style="width:90px">Contr. C4</span><div class="vis-bar"><div class="vis-fill" style="width:1%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">0.6%</span></div>
               </div>
-              <div style="margin-top:8px;font-size:10px;color:var(--text3)">SWC configuration readiness — % with Initial MHR filled</div>
+              <div style="margin-top:8px;font-size:10px;color:var(--text3)">SWC configuration readiness — % with Initial MHR filled (anonymized for public portfolio use)</div>
             </div>
             <div class="case-visual" style="margin-top:12px">
               <div class="case-visual-title">Pipeline Flow</div>
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 0">
-                <span style="background:var(--accent-bg);color:var(--accent);padding:4px 10px;border-radius:4px;font-size:11px">DB Connect</span>
+                <span style="background:var(--accent-bg);color:var(--accent);padding:4px 10px;border-radius:4px;font-size:11px">Extract</span>
                 <span style="color:var(--text3)">→</span>
                 <span style="background:var(--amber-bg);color:var(--amber);padding:4px 10px;border-radius:4px;font-size:11px">Validate</span>
                 <span style="color:var(--text3)">→</span>
-                <span style="background:var(--green-bg);color:var(--green);padding:4px 10px;border-radius:4px;font-size:11px">Clean Data</span>
+                <span style="background:var(--green-bg);color:var(--green);padding:4px 10px;border-radius:4px;font-size:11px">Prepare Data</span>
                 <span style="color:var(--text3)">→</span>
-                <span style="background:var(--accent-bg);color:var(--accent);padding:4px 10px;border-radius:4px;font-size:11px">Power BI</span>
+                <span style="background:var(--accent-bg);color:var(--accent);padding:4px 10px;border-radius:4px;font-size:11px">Refresh BI</span>
               </div>
             </div>
           </div>
