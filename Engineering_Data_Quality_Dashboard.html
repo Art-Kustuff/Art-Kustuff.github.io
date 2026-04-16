@@ -88,19 +88,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
 .tab{padding:6px 16px;font-size:12px;font-family:var(--mono);font-weight:500;color:var(--text2);cursor:pointer;border-radius:4px;transition:all 0.2s;border:none;background:none}
 .tab:hover{color:var(--text)} .tab.active{background:var(--blue-bg);color:var(--blue2)}
 .tab-content{display:none} .tab-content.active{display:block}
-@media(max-width:768px){.kpi-row{grid-template-columns:1fr 1fr}.contractor-grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1 1 auto;text-align:center}.heatmap{font-size:11px;min-width:980px}.heatmap thead th,.heatmap td{padding:8px 10px}}
+@media(max-width:980px){.issues-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:768px){.kpi-row{grid-template-columns:1fr 1fr}.contractor-grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1 1 auto;text-align:center}.heatmap{font-size:11px;min-width:980px}.heatmap thead th,.heatmap td{padding:8px 10px}.issues-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="header">
   <div class="container">
     <h1><span>▣</span> Anonymized Engineering Data Quality Dashboard</h1>
-    <div class="header-meta">Portfolio example · modified public-safe data · Apr 2026</div>
+    <div class="header-meta">Public-safe portfolio example · modified data · Apr 2026</div>
   </div>
 </div>
 
 <div class="container">
-  <div class="notice"><strong>Note:</strong> This dashboard is a public portfolio demonstration. Counts, percentages, contractor labels, and update markers were anonymized and adjusted for confidentiality while keeping the underlying engineering data quality logic intact.</div>
+  <div class="notice"><strong>Note:</strong> Public-safe portfolio example. Counts, percentages, contractor labels, and update markers were modified for confidentiality while preserving the underlying data-quality logic.</div>
 
   <div class="kpi-row">
     <div class="kpi kpi--blue"><div class="kpi-label">Total Tags</div><div class="kpi-value">612,840</div><div class="kpi-sub">11 disciplines</div></div>
@@ -143,7 +143,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
           <tbody></tbody>
         </table>
       </div>
-      <p style="font-size:12px;color:var(--text3);margin-top:12px">Counts and percentages shown in this version are modified for public presentation and should be read as illustrative portfolio metrics, not live project values.</p>
+      <p style="font-size:12px;color:var(--text3);margin-top:12px">Counts and percentages in this version were modified for public presentation and should be read as illustrative portfolio metrics, not live project values.</p>
     </div>
   </div>
 
@@ -193,22 +193,22 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
       <div class="section-header">
         <span class="section-num">04</span>
         <span class="section-title">Key Issues</span>
-        <span class="section-desc">modified portfolio indicators</span>
+        <span class="section-desc">summary indicators</span>
       </div>
       <div class="issues-grid">
         <div class="issue-card">
           <div class="issue-val">82.4%</div>
-          <div class="issue-label">Records missing real FWBS assignment</div>
+          <div class="issue-label">Records lacking meaningful FWBS</div>
           <div class="issue-pct">primary completeness gap</div>
         </div>
         <div class="issue-card warn">
           <div class="issue-val">69%</div>
-          <div class="issue-label">SWC records missing initial manhours</div>
+          <div class="issue-label">SWC records missing initial MHR</div>
           <div class="issue-pct">configuration readiness constraint</div>
         </div>
         <div class="issue-card">
           <div class="issue-val">41.2%</div>
-          <div class="issue-label">Parent Tag completeness overall</div>
+          <div class="issue-label">Parent tag completeness overall</div>
           <div class="issue-pct">traceability weakness</div>
         </div>
         <div class="issue-card warn">
@@ -219,12 +219,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
         <div class="issue-card info">
           <div class="issue-val">11</div>
           <div class="issue-label">Disciplines compared</div>
-          <div class="issue-pct">portfolio-safe breakdown</div>
+          <div class="issue-pct">public-safe breakdown</div>
         </div>
         <div class="issue-card info">
           <div class="issue-val">8</div>
-          <div class="issue-label">Contractor views aligned</div>
-          <div class="issue-pct">same set used across tabs</div>
+          <div class="issue-label">Contractors aligned across tabs</div>
+          <div class="issue-pct">same set used across views</div>
         </div>
       </div>
     </div>
@@ -275,6 +275,7 @@ const DATA = {
 function fmt(n){return n.toLocaleString('en-US')}
 function heatClass(pct){ if(pct>=90) return 'h-green'; if(pct>=70) return 'h-lgreen'; if(pct>=50) return 'h-yellow'; if(pct>0) return 'h-red'; return 'h-dgrey'; }
 function badgeClass(pct){ if(pct>=70) return 'badge-green'; if(pct>=40) return 'badge-amber'; return 'badge-red'; }
+function scoreBadgeClass(pct){ if(pct>=85) return 'badge-green'; if(pct>=60) return 'badge-amber'; return 'badge-red'; }
 function barColor(pct){ if(pct>=70) return 'var(--green)'; if(pct>=40) return 'var(--amber)'; return 'var(--red)'; }
 function trafficClass(pct){ if(pct>=85) return 'traffic-g'; if(pct>=60) return 'traffic-a'; return 'traffic-r'; }
 function weightedScore(c){ return (c.desc*0.15 + c.gwbs*0.25 + c.fwbs*0.40 + c.dwg*0.20); }
@@ -337,7 +338,7 @@ function renderScores(){
       <td style="font-family:var(--mono);color:var(--text2)">${fmt(c.tags)}</td>
       ${fields.map(f=>`<td class="score-cell ${heatClass(c[f])}">${c[f].toFixed(1)}%</td>`).join('')}
       <td class="score-cell" style="font-size:14px;color:${barColor(c.avg)}">${c.avg.toFixed(1)}%</td>
-      <td><span class="c-card-badge ${badgeClass(c.avg)}">${scoreStatus(c.avg)}</span></td>`;
+      <td><span class="c-card-badge ${scoreBadgeClass(c.avg)}">${scoreStatus(c.avg)}</span></td>`;
     tbody.appendChild(tr);
   });
 }
