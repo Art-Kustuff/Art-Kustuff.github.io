@@ -450,78 +450,101 @@ nav .container{display:flex;justify-content:space-between;align-items:center}
       </div>
     </div>
 
-    <div class="case fade-in">
-      <div class="case-header">
-        <div style="display:flex;align-items:flex-start">
-          <span class="case-num">03</span>
-          <div class="case-title-block">
-            <div class="case-title">Proposed Data Validation Pipeline &amp; Reporting Refresh</div>
-            <div class="case-subtitle">Architecture concept for automated extraction, validation, and reporting refresh</div>
-          </div>
+   <div class="case fade-in">
+  <div class="case-header">
+    <div style="display:flex;align-items:flex-start">
+      <span class="case-num">03</span>
+      <div class="case-title-block">
+        <div class="case-title">Engineering Data Validation Pipeline for BI Refresh</div>
+        <div class="case-subtitle">Working Python prototype for extracting engineering datasets, validating data quality, and preparing auditable Power BI refresh inputs</div>
+      </div>
+    </div>
+    <div class="case-badges">
+      <span class="badge">Python</span>
+      <span class="badge">SQL / ODBC</span>
+      <span class="badge">Power BI</span>
+      <span class="badge">PowerShell</span>
+      <span class="badge">Prototype</span>
+    </div>
+  </div>
+
+  <div class="case-body">
+    <div class="case-grid">
+      <div>
+        <div class="case-section">
+          <div class="case-section-title">Problem</div>
+          <p>Engineering dashboards often depend on manual exports, inconsistent source files, and refreshes that happen before data quality checks are complete. That creates reporting lag, weakens trust in dashboards, and pushes raw operational data into BI before it is ready for management use.</p>
         </div>
-        <div class="case-badges">
-          <span class="badge">Python</span>
-          <span class="badge">SQL</span>
-          <span class="badge">Power BI</span>
-          <span class="badge">PowerShell</span>
-          <span class="badge" style="background:var(--amber-bg);color:var(--amber);border-color:rgba(210,153,34,0.18)">Architecture Concept</span>
+
+        <div class="case-section">
+          <div class="case-section-title">What I Built</div>
+          <p>Built a working Python pipeline prototype that can pull engineering datasets either from database tables or from standardized Excel exports, run validation checks, and prepare clean CSV/XLSX outputs for Power BI refresh. The pipeline also generates JSON summary and log files to make refresh runs traceable and auditable.</p>
+        </div>
+
+        <div class="case-section">
+          <div class="case-section-title">Validation Scope</div>
+          <p>Checks include missing GWBS, missing real FWBS values (including placeholder handling), missing drawing references, and incomplete SWC visibility. The aim is not only to refresh dashboards faster, but to create a controlled pre-refresh layer so reporting is fed with cleaner datasets.</p>
+        </div>
+
+        <div class="case-section">
+          <div class="case-section-title">Status</div>
+          <p>Implementation-ready prototype designed for scheduled refresh and adaptation to project-specific schemas, folder structures, and reporting rules.</p>
         </div>
       </div>
-      <div class="case-body">
-        <div class="case-grid">
-          <div>
-            <div class="case-section">
-              <div class="case-section-title">Architecture Concept</div>
-              <p>Proposed architecture for improving reporting reliability by validating engineering data before dashboard refresh. The idea is to extract structured project data, run checks upstream, and feed cleaner datasets into reporting layers.</p>
-              <p>Typical inputs: tag, assignment, and planning configuration datasets.</p>
-            </div>
-            <div class="case-section">
-              <div class="case-section-title">Architecture</div>
-              <p><strong>Step 1:</strong> Python extracts structured project data from database tables or Excel exports.</p>
-              <p><strong>Step 2:</strong> Validation logic checks completeness, placeholder values, contractor readiness, and configuration gaps.</p>
-              <p><strong>Step 3:</strong> Validated datasets are saved to a shared folder together with JSON summary and audit log.</p>
-              <p><strong>Step 4:</strong> Power BI scheduled refresh picks up the prepared datasets and updates reporting automatically.</p>
-              <p><strong>Step 5:</strong> Windows Task Scheduler runs the pipeline on a daily schedule.</p>
-            </div>
-            <div class="case-section">
-              <div class="case-section-title">Value</div>
-              <p>Reduces the risk of unreliable data reaching dashboards and management reporting.</p>
-            </div>
-          </div>
-          <div>
-            <div class="case-visual">
-              <div class="case-visual-title">Illustrative Contractor Data Trust View</div>
-              <div style="padding:4px 0">
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. G</span><div class="vis-bar"><div class="vis-fill" style="width:96%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">96.3%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. H</span><div class="vis-bar"><div class="vis-fill" style="width:74%;background:var(--green)"></div></div><span class="vis-val" style="color:var(--green)">74.3%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. A</span><div class="vis-bar"><div class="vis-fill" style="width:66%;background:var(--amber)"></div></div><span class="vis-val" style="color:var(--amber)">66.2%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. F</span><div class="vis-bar"><div class="vis-fill" style="width:54%;background:var(--amber)"></div></div><span class="vis-val" style="color:var(--amber)">53.6%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. B</span><div class="vis-bar"><div class="vis-fill" style="width:43%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">42.8%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. C</span><div class="vis-bar"><div class="vis-fill" style="width:33%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">33.0%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. D</span><div class="vis-bar"><div class="vis-fill" style="width:5%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">4.5%</span></div>
-                <div class="vis-row"><span class="vis-label" style="width:90px">Contr. E</span><div class="vis-bar"><div class="vis-fill" style="width:1%;background:var(--red)"></div></div><span class="vis-val" style="color:var(--red)">0.6%</span></div>
-              </div>
-              <div style="margin-top:8px;font-size:10px;color:var(--text3)">Illustrative configuration readiness view (anonymized for public portfolio use)</div>
-            </div>
-            <div class="case-visual" style="margin-top:12px">
-              <div class="case-visual-title">Pipeline Flow</div>
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 0">
-                <span style="background:var(--accent-bg);color:var(--accent);padding:4px 10px;border-radius:4px;font-size:11px">Extract</span>
-                <span style="color:var(--text3)">→</span>
-                <span style="background:var(--amber-bg);color:var(--amber);padding:4px 10px;border-radius:4px;font-size:11px">Validate</span>
-                <span style="color:var(--text3)">→</span>
-                <span style="background:var(--green-bg);color:var(--green);padding:4px 10px;border-radius:4px;font-size:11px">Prepare Data</span>
-                <span style="color:var(--text3)">→</span>
-                <span style="background:var(--accent-bg);color:var(--accent);padding:4px 10px;border-radius:4px;font-size:11px">Refresh BI</span>
-              </div>
-            </div>
-          </div>
+
+      <div>
+        <div class="case-visual">
+          <div class="case-visual-title">pipeline_summary.json</div>
+          <pre style="margin:0;font-family:var(--mono);font-size:11px;line-height:1.75;color:var(--text2);white-space:pre-wrap">{
+  "timestamp": "masked_sample_run",
+  "project": "masked_project",
+  "tags": {
+    "total": "~600K",
+    "no_gwbs": "withheld",
+    "no_fwbs_real": "withheld",
+    "no_drawing": "withheld",
+    "fwbs_gap_pct": "withheld"
+  },
+  "swc": {
+    "total": "withheld",
+    "no_swc": "withheld"
+  }
+}
+}</pre>
         </div>
-        <div class="case-links">
-          <a href="https://github.com/Art-Kustuff/epc-data-toolkit" class="case-link" target="_blank">GitHub Repository</a>
+
+        <div class="case-visual" style="margin-top:12px">
+          <div class="case-visual-title">Audit Logic</div>
+          <div style="padding:8px 0">
+            <div style="color:var(--accent);margin-bottom:8px">▸ Pull</div>
+            <div style="color:var(--text3);padding-left:16px;margin-bottom:12px">Database tables or Excel exports</div>
+
+            <div style="color:var(--amber);margin-bottom:8px">▸ Validate</div>
+            <div style="color:var(--text3);padding-left:16px;margin-bottom:12px">GWBS / FWBS / Drawing / SWC checks</div>
+
+            <div style="color:var(--green);margin-bottom:8px">▸ Record</div>
+            <div style="color:var(--text3);padding-left:16px;margin-bottom:4px">JSON summary saved</div>
+            <div style="color:var(--text3);padding-left:16px;margin-bottom:12px">Log appended for each run</div>
+
+            <div style="color:var(--red);margin-bottom:8px">▸ Use</div>
+            <div style="color:var(--text3);padding-left:16px">Prepared outputs become cleaner Power BI refresh inputs</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="case-metrics">
+      <div class="metric"><div class="metric-val accent">DB / Export</div><div class="metric-label">Flexible inputs</div></div>
+      <div class="metric"><div class="metric-val amber">JSON</div><div class="metric-label">Audit snapshot</div></div>
+      <div class="metric"><div class="metric-val green">Scheduled</div><div class="metric-label">Refresh-ready</div></div>
+      <div class="metric"><div class="metric-val accent">Prototype</div><div class="metric-label">Delivery status</div></div>
+    </div>
+
+    <div class="case-links">
+      <a href="https://github.com/Art-Kustuff/epc-data-toolkit" class="case-link" target="_blank">GitHub Repository</a>
+    </div>
+  </div>
+</div>
   </div>
 </section>
 
