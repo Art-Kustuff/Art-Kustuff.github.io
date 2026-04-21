@@ -82,13 +82,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
 .issue-val{font-size:22px;font-weight:700;font-family:var(--mono);color:var(--text)}
 .issue-label{font-size:11px;color:var(--text2);margin-top:2px}
 .issue-pct{font-size:11px;color:var(--text3);font-family:var(--mono)}
-.footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 0;margin-top:px;text-align:center}
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 0;margin-top:32px;text-align:center}
 .footer p{font-size:11px;color:var(--text3);font-family:var(--mono)}
 .tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--bg2);border-radius:6px;padding:3px;border:1px solid var(--border);width:fit-content;flex-wrap:wrap}
 .tab{padding:6px 16px;font-size:12px;font-family:var(--mono);font-weight:500;color:var(--text2);cursor:pointer;border-radius:4px;transition:all 0.2s;border:none;background:none}
-.tab:hover{color:var(--text)} .tab.active{background:var(--blue-bg);color:var(--blue2)}
-.tab-content{display:none} .tab-content.active{display:block}
-@media(max-width:980px){.issues-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:768px){.kpi-row{grid-template-columns:1fr 1fr}.contractor-grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1 1 auto;text-align:center}.heatmap{font-size:11px;min-width:980px}.heatmap thead th,.heatmap td{padding:8px 10px}.issues-grid{grid-template-columns:1fr}}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--blue-bg);color:var(--blue2)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+@media(max-width:980px){
+  .issues-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:768px){
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .contractor-grid{grid-template-columns:1fr}
+  .tabs{width:100%}
+  .tab{flex:1 1 auto;text-align:center}
+  .heatmap{font-size:11px;min-width:980px}
+  .heatmap thead th,
+  .heatmap td{padding:8px 10px}
+  .issues-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -100,14 +114,40 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
 </div>
 
 <div class="container">
-  <div class="notice"><strong>Note:</strong> Public-safe portfolio example. Counts, percentages, contractor labels, and update markers were modified for confidentiality while preserving the underlying data-quality logic.</div>
+  <div class="notice">
+    <strong>Note:</strong> Public-safe portfolio example. Counts, percentages, contractor labels, and selected status markers were masked for confidentiality while preserving the underlying validation logic and relative data-quality patterns.
+  </div>
 
   <div class="kpi-row">
-    <div class="kpi kpi--blue"><div class="kpi-label">Total Tags</div><div class="kpi-value">600K+</div><div class="kpi-sub">11 disciplines</div></div>
-    <div class="kpi kpi--amber"><div class="kpi-label">Overall Data Quality</div><div class="kpi-value">XX%</div><div class="kpi-sub">weighted completeness score</div></div>
-    <div class="kpi kpi--red"><div class="kpi-label">FWBS Gap</div><div class="kpi-value">XX%</div><div class="kpi-sub">records without real FWBS</div></div>
-    <div class="kpi kpi--red"><div class="kpi-label">Config Readiness</div><div class="kpi-value">XX%</div><div class="kpi-sub">SWC with initial manhours</div></div>
-    <div class="kpi kpi--green"><div class="kpi-label">Total Scope</div><div class="kpi-value">~100M</div><div class="kpi-sub">anonymized manhours</div></div>
+    <div class="kpi kpi--blue">
+      <div class="kpi-label">Total Tags</div>
+      <div class="kpi-value">600K+</div>
+      <div class="kpi-sub">11 disciplines</div>
+    </div>
+
+    <div class="kpi kpi--amber">
+      <div class="kpi-label">Overall Data Quality</div>
+      <div class="kpi-value">SIGNIFICANT GAPS</div>
+      <div class="kpi-sub">weighted completeness score</div>
+    </div>
+
+    <div class="kpi kpi--red">
+      <div class="kpi-label">FWBS Gap</div>
+      <div class="kpi-value">CRITICAL</div>
+      <div class="kpi-sub">records without real FWBS</div>
+    </div>
+
+    <div class="kpi kpi--amber">
+      <div class="kpi-label">Config Readiness</div>
+      <div class="kpi-value">MIXED</div>
+      <div class="kpi-sub">SWC with initial manhours</div>
+    </div>
+
+    <div class="kpi kpi--blue">
+      <div class="kpi-label">Contractors Compared</div>
+      <div class="kpi-value">8</div>
+      <div class="kpi-sub">aligned across tabs</div>
+    </div>
   </div>
 
   <div class="tabs">
@@ -165,9 +205,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
       <div class="section-header">
         <span class="section-num">03</span>
         <span class="section-title">Weighted Contractor Data Score</span>
-        <span class="section-desc">FWBS weighted more heavily than descriptive fields</span>
+        <span class="section-desc">GWBS weighted most heavily due to reporting impact</span>
       </div>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;max-width:920px">Public-safe weighted score based on Description (20%), GWBS (45%), FWBS (15%), and Drawing (20%). Contractors cannot appear healthy if the critical breakdown fields remain largely unfilled.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;max-width:920px">
+        Public-safe weighted score based on Description (20%), GWBS (45%), FWBS (15%), and Drawing (20%).
+        GWBS carries the highest weight because it drives reporting structure; FWBS remains a critical readiness signal,
+        but in this model it is not the top differentiator across contractors.
+      </p>
       <div class="table-wrap">
         <table class="score-table" id="score-table">
           <thead>
@@ -197,32 +241,32 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
       </div>
       <div class="issues-grid">
         <div class="issue-card">
-          <div class="issue-val">XX%</div>
+          <div class="issue-val" style="color:var(--red)">CRITICAL</div>
           <div class="issue-label">Records lacking meaningful FWBS</div>
           <div class="issue-pct">primary completeness gap</div>
         </div>
         <div class="issue-card warn">
-          <div class="issue-val">XX%</div>
+          <div class="issue-val" style="color:var(--amber)">MATERIAL</div>
           <div class="issue-label">SWC records missing initial MHR</div>
           <div class="issue-pct">configuration readiness constraint</div>
         </div>
         <div class="issue-card">
-          <div class="issue-val">XX%</div>
+          <div class="issue-val" style="color:var(--red)">LOW</div>
           <div class="issue-label">Parent tag completeness overall</div>
           <div class="issue-pct">traceability weakness</div>
         </div>
         <div class="issue-card warn">
-          <div class="issue-val">XX%</div>
+          <div class="issue-val" style="color:var(--amber)">MIXED</div>
           <div class="issue-label">Drawing completeness overall</div>
           <div class="issue-pct">inconsistent by discipline</div>
         </div>
         <div class="issue-card info">
-          <div class="issue-val">11</div>
+          <div class="issue-val" style="color:var(--blue2)">11</div>
           <div class="issue-label">Disciplines compared</div>
           <div class="issue-pct">public-safe breakdown</div>
         </div>
         <div class="issue-card info">
-          <div class="issue-val">8</div>
+          <div class="issue-val" style="color:var(--blue2)">8</div>
           <div class="issue-label">Contractors aligned across tabs</div>
           <div class="issue-pct">same set used across views</div>
         </div>
