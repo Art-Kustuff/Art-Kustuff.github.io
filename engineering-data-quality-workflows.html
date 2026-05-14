@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Data Quality & SQL-backed Review Workflows - Artem Kustov</title>
+<meta name="description" content="Engineering Data Quality and SQL-backed Review Workflows case study: tag register completeness, SQL-backed project source lookup, QC review packages, Power BI-ready monitoring, and controlled project data outputs.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Job_Search_Control_Tower/assets/role-pages.css">
+<style>
+.container{max-width:1120px}
+.hero{padding:128px 0 64px}
+.section{padding:52px 0}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px}
+.panel h3{font-size:16px;margin-bottom:10px}
+.panel p,.panel li{font-size:14px;color:var(--text2);line-height:1.75}
+.panel ul{padding-left:18px}
+.figure{margin:20px 0 0;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:10px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.figure img{display:block;width:100%;max-height:430px;object-fit:contain;object-position:top center;border-radius:8px;background:#f3f4f6}
+.figure figcaption{font-size:12px;color:var(--text3);line-height:1.6;margin:10px 4px 2px}
+.quality-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.quality{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.quality-k{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:1.3px;text-transform:uppercase;margin-bottom:8px}
+.quality h3{font-size:15px;margin-bottom:8px;line-height:1.35}
+.quality p{font-size:13px;color:var(--text2);line-height:1.65}
+.note{font-size:12px;color:var(--text3);line-height:1.7;margin-top:10px}
+@media(max-width:900px){.split,.quality-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <div class="nav-name"><span>[]</span> artem.kustov</div>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="#checks">Checks</a>
+      <a href="#sql">SQL workflow</a>
+      <a href="#dashboard">Dashboard</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Case 03 / Data quality / SQL-backed workflow</div>
+    <h1>Engineering Data Quality & SQL-backed Review Workflows</h1>
+    <p class="hero-sub">A set of validation and review workflows for tag register completeness, reporting readiness, SQL lookup against project inspection/progress data sources, QC review packages, and Power BI-ready monitoring.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#checks">View checks</a>
+      <a class="btn secondary" href="engineering-data-quality-dashboard.html">Open dashboard</a>
+      <a class="btn secondary" href="index.html">Back to overview</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-val">700K+</div><div class="stat-label">Total tag environment</div></div>
+      <div class="stat"><div class="stat-val">SQL</div><div class="stat-label">Project source lookup</div></div>
+      <div class="stat"><div class="stat-val">Active</div><div class="stat-label">SQL-backed workflow</div></div>
+      <div class="stat"><div class="stat-val">Power BI</div><div class="stat-label">Monitoring-ready views</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="checks" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Quality Checks</div>
+    <div class="section-title">Tag register completeness and readiness</div>
+    <p class="section-desc">The toolkit focuses on data-quality signals that affect reporting, handover readiness, and downstream project-system use.</p>
+    <div class="quality-grid">
+      <div class="quality fade-in">
+        <div class="quality-k">Completeness</div>
+        <h3>Mandatory fields</h3>
+        <p>Description, GWBS, FWBS, drawing references, parent tags, source fields, and other reporting-critical attributes.</p>
+      </div>
+      <div class="quality fade-in">
+        <div class="quality-k">Cleansing</div>
+        <h3>Placeholder handling</h3>
+        <p>Checks distinguish true completeness from placeholder or non-usable values that can mask readiness gaps.</p>
+      </div>
+      <div class="quality fade-in">
+        <div class="quality-k">Consistency</div>
+        <h3>Duplicate and mismatch review</h3>
+        <p>Issue lists surface duplicated tags, naming inconsistencies, status mismatches, and incomplete hierarchy context.</p>
+      </div>
+      <div class="quality fade-in">
+        <div class="quality-k">Readiness</div>
+        <h3>Reporting impact</h3>
+        <p>Weighted views show which contractors, disciplines, or setup areas need attention before reporting or review close.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sql" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">SQL-backed Workflow</div>
+    <div class="section-title">QualityFlow as an internal workflow example</div>
+    <div class="split">
+      <div class="panel fade-in">
+        <h3>Workflow scope</h3>
+        <p>A SQL-backed internal workflow is actively used in site workflows to support lookup against project inspection/progress data sources, QC package generation, review collection, controlled output preparation, and monitoring-ready data.</p>
+        <ul>
+          <li>SQL-backed lookup against project system data, including EasyPlant inspection/progress records.</li>
+          <li>SQLite event staging and status tracking.</li>
+          <li>QC package generation and review collection.</li>
+          <li>Controlled output preparation for follow-up.</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="figure">
+          <img src="assets/screenshots/qualityflow-launcher.png" alt="QualityFlow launcher screenshot">
+          <figcaption>SQL-backed workflow launcher used for project inspection/progress lookup, QC package generation, review collection, and controlled output preparation.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dashboard" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Dashboard</div>
+    <div class="section-title">Public-safe data quality view</div>
+    <div class="split">
+      <div class="panel fade-in">
+        <h3>What it shows</h3>
+        <p>The dashboard is an anonymized view of the same data-quality thinking: field completeness, contractor readiness, weighted data score, and key issue signals. Values and labels are masked for confidentiality.</p>
+      </div>
+      <div class="panel fade-in">
+        <h3>Data management value</h3>
+        <p>SQL, Python, and Power BI are the tool layer. The core value is controlled engineering data validation before downstream reporting, review, and handover-related workflows depend on the data.</p>
+        <a class="btn" style="margin-top:16px" href="engineering-data-quality-dashboard.html">Open dashboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Contact</div>
+    <div class="section-title">Artem Kustov</div>
+    <p class="section-desc" style="margin-bottom:0">Engineering Data Management / EPC project data workflows.</p>
+    <div class="contact-links">
+      <a href="mailto:akustov1995@gmail.com" class="contact-link">Email</a>
+      <a href="https://linkedin.com/in/artem-kustov-74382925b" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Art-Kustuff" class="contact-link" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<div class="footer"><p>Engineering Data Quality & SQL-backed Review Workflows - 2026</p></div>
+<script src="../Job_Search_Control_Tower/assets/role-pages.js"></script>
+</body>
+</html>
