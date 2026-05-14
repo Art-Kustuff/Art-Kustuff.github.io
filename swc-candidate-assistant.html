@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWC Candidate Assistant - Artem Kustov</title>
+<meta name="description" content="SWC Candidate Assistant case study: controlled engineering data review layer for tag-to-SubWorkClass consistency using project system exports, AVEVA extracts, approved EasyPlant reference assignments, and traceable review outputs.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Job_Search_Control_Tower/assets/role-pages.css">
+<style>
+.container{max-width:1120px}
+.hero{padding:128px 0 64px}
+.section{padding:52px 0}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px}
+.panel h3{font-size:16px;margin-bottom:10px}
+.panel p,.panel li{font-size:14px;color:var(--text2);line-height:1.75}
+.panel ul{padding-left:18px}
+.figure{margin:20px 0 0;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:10px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.figure img{display:block;width:100%;max-height:420px;object-fit:contain;border-radius:8px;background:#f3f4f6}
+.figure figcaption{font-size:12px;color:var(--text3);line-height:1.6;margin:10px 4px 2px}
+.method-grid,.tagging-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.method,.tagging-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.method-k,.tagging-k{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:1.3px;text-transform:uppercase;margin-bottom:8px}
+.method h3,.tagging-card h3{font-size:15px;margin-bottom:8px;line-height:1.35}
+.method p,.tagging-card p{font-size:13px;color:var(--text2);line-height:1.65}
+.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.output{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.output-k{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.output p{font-size:13px;color:var(--text2);line-height:1.7}
+.note{font-size:12px;color:var(--text3);line-height:1.7;margin-top:10px}
+@media(max-width:900px){.split,.method-grid,.tagging-grid,.output-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <div class="nav-name"><span>[]</span> artem.kustov</div>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#governance">Governance</a>
+      <a href="#outputs">Outputs</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Case 01 / Engineering Data Review Layer</div>
+    <h1>SWC Candidate Assistant for <span class="highlight">tag-to-SubWorkClass consistency</span></h1>
+    <p class="hero-sub">A controlled review layer that helps engineers check how tags should map to SubWorkClass bundles before downstream construction, progress, and reporting workflows depend on that data.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#method">View method</a>
+      <a class="btn secondary" href="index.html">Back to overview</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-val">Approved</div><div class="stat-label">SWC reference index</div></div>
+      <div class="stat"><div class="stat-val">514</div><div class="stat-label">Equipment-code rules</div></div>
+      <div class="stat"><div class="stat-val">272</div><div class="stat-label">Tag-token rules</div></div>
+      <div class="stat"><div class="stat-val">5-6m</div><div class="stat-label">Full export runtime</div></div>
+    </div>
+    <figure class="figure">
+      <img src="assets/screenshots/swc-assistant-control-center.png" alt="SWC Assistant Control Center screenshot">
+      <figcaption>SWC Assistant control center used to analyze AVEVA Construction Delivery exports and manage the rule-library workflow.</figcaption>
+    </figure>
+    <p class="note">The SWC reference index is built from approved EasyPlant assignment data and is separate from the broader 700K+ project tag environment.</p>
+  </div>
+</section>
+
+<section class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Context</div>
+    <div class="section-title">Why this matters</div>
+    <div class="split">
+      <div class="panel fade-in">
+        <h3>Project data issue</h3>
+        <p>SubWorkClass assignment affects construction scope, progress measurement, subcontractor packaging, and reporting. When assignment gaps or inconsistencies appear, they can create downstream ambiguity across construction/progress systems, reporting, and review workflows.</p>
+      </div>
+      <div class="panel fade-in">
+        <h3>Data management value</h3>
+        <p>The assistant turns a manual consistency check into a structured review package: candidate SWC bundle, evidence source, confidence band, explanation, and project context for each tag.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Tagging Philosophy</div>
+    <div class="section-title">Tag structure, hierarchy, and lifecycle data</div>
+    <p class="section-desc">The workflow is built around the practical logic of engineering tag data: discipline and category codes, equipment-code patterns, WorkClass/SubWorkClass structure, GWBS/FWBS context, subcontractor scope, handover area, and downstream construction/progress system requirements. The goal is to make tag-to-SWC review traceable before construction, progress, reporting, or handover-related workflows depend on the data.</p>
+    <div class="tagging-grid">
+      <div class="tagging-card fade-in">
+        <div class="tagging-k">Tag structure</div>
+        <h3>What the tag represents</h3>
+        <p>Uses tag format, category, equipment code, and parsed token patterns to understand the tag's engineering context.</p>
+      </div>
+      <div class="tagging-card fade-in">
+        <div class="tagging-k">Equipment hierarchy</div>
+        <h3>From equipment family to SWC</h3>
+        <p>Connects equipment-family patterns to WorkClass/SubWorkClass logic and downstream progress structures.</p>
+      </div>
+      <div class="tagging-card fade-in">
+        <div class="tagging-k">Lifecycle data</div>
+        <h3>Engineering to commissioning</h3>
+        <p>Frames SWC assignment as part of the engineering-to-construction-to-commissioning data flow, not as an isolated spreadsheet task.</p>
+      </div>
+      <div class="tagging-card fade-in">
+        <div class="tagging-k">Review control</div>
+        <h3>Manual review where needed</h3>
+        <p>Keeps lower-evidence records as manual-review candidates instead of automatic decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="method" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Method</div>
+    <div class="section-title">Four evidence layers</div>
+    <p class="section-desc">The tool uses transparent matching logic rather than a black-box model. Lower-confidence records are kept as review candidates, not automatic decisions.</p>
+    <div class="method-grid">
+      <div class="method fade-in">
+        <div class="method-k">Layer 1</div>
+        <h3>Approved assignment match</h3>
+        <p>Finds tags that already have an approved SWC assignment in the EasyPlant reference index.</p>
+      </div>
+      <div class="method fade-in">
+        <div class="method-k">Layer 2</div>
+        <h3>Equipment-code rule match</h3>
+        <p>Uses dominant Category x EquipmentCode patterns mined from existing assignments.</p>
+      </div>
+      <div class="method fade-in">
+        <div class="method-k">Layer 3</div>
+        <h3>Tag-token rule match</h3>
+        <p>Uses recurring tag string patterns where equipment metadata is incomplete.</p>
+      </div>
+      <div class="method fade-in">
+        <div class="method-k">Layer 4</div>
+        <h3>Procedure-based review candidates</h3>
+        <p>Parses tag structure and creates manual-review candidates when direct evidence is limited.</p>
+      </div>
+    </div>
+    <figure class="figure">
+      <img src="assets/screenshots/swc-assistant-build_rule_library.png" alt="SWC Assistant rule library build screen">
+      <figcaption>Rule-library workflow used to validate source exports, build candidate rules, and review generated outputs before applying them to the local rule set.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="governance" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Governance</div>
+    <div class="section-title">A review layer, not a replacement system</div>
+    <div class="split">
+      <div class="panel fade-in">
+        <h3>System boundary</h3>
+        <p>The workflow produces review-ready Excel outputs for engineer approval, while source systems remain the authoritative data record.</p>
+      </div>
+      <div class="panel fade-in">
+        <h3>What this demonstrates</h3>
+        <p>Practical understanding of tagging philosophy, equipment hierarchy, data lineage, source-system authority, and the need for traceable review before project data is used downstream.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outputs" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Outputs</div>
+    <div class="section-title">What reviewers get</div>
+    <div class="output-grid">
+      <div class="output fade-in">
+        <div class="output-k">Per-tag suggestion</div>
+        <p>Suggested SWC bundle, confidence band, evidence layer, and explanation.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">Traceability</div>
+        <p>Rule source, parsed tag components, alternatives, and review notes where needed.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">Project context</div>
+        <p>Contract, PSM subcontractor, handover area, discipline, equipment class, and warnings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Contact</div>
+    <div class="section-title">Artem Kustov</div>
+    <p class="section-desc" style="margin-bottom:0">Engineering Data Management / Information Management / EPC project data workflows.</p>
+    <div class="contact-links">
+      <a href="mailto:akustov1995@gmail.com" class="contact-link">Email</a>
+      <a href="https://linkedin.com/in/artem-kustov-74382925b" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Art-Kustuff" class="contact-link" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<div class="footer"><p>SWC Candidate Assistant - engineering data review case - 2026</p></div>
+<script src="../Job_Search_Control_Tower/assets/role-pages.js"></script>
+</body>
+</html>

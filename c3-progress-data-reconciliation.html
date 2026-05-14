@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C3 Progress Data Reconciliation Workflow - Artem Kustov</title>
+<meta name="description" content="C3 Progress Data Reconciliation Workflow case study: controlled EPC data review loop between subcontractor C3 submissions, project progress reference data including EasyPlant exports, Quality review, Construction Team delta confirmation, Planning alignment, and reporting outputs.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Job_Search_Control_Tower/assets/role-pages.css">
+<style>
+.container{max-width:1120px}
+.hero{padding:128px 0 64px}
+.section{padding:52px 0}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px}
+.panel h3{font-size:16px;margin-bottom:10px}
+.panel p,.panel li{font-size:14px;color:var(--text2);line-height:1.75}
+.panel ul{padding-left:18px}
+.figure{margin:20px 0 0;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:10px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.figure img{display:block;width:100%;max-height:430px;object-fit:contain;object-position:top center;border-radius:8px;background:#f3f4f6}
+.figure figcaption{font-size:12px;color:var(--text3);line-height:1.6;margin:10px 4px 2px}
+.workflow{display:grid;gap:12px}
+.step{display:grid;grid-template-columns:42px 1fr;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.step-num{font-family:var(--mono);font-size:17px;color:var(--accent);font-weight:700}
+.step h3{font-size:15px;margin-bottom:4px}
+.step p{font-size:13px;color:var(--text2);line-height:1.65}
+.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.output{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.output-k{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.output p{font-size:13px;color:var(--text2);line-height:1.7}
+.note{font-size:12px;color:var(--text3);line-height:1.7;margin-top:10px}
+@media(max-width:900px){.split,.output-grid{grid-template-columns:1fr}.step{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <div class="nav-name"><span>[]</span> artem.kustov</div>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#outputs">Outputs</a>
+      <a href="#value">Value</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Case 02 / Live workflow / EPC progress data</div>
+    <h1>C3 Progress Data Reconciliation Workflow</h1>
+    <p class="hero-sub">A live weekly workflow for reconciling subcontractor C3 progress submissions against project progress reference data, including EasyPlant exports. The workflow routes exceptions, confirms deltas, and prepares controlled reporting outputs.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#workflow">View workflow</a>
+      <a class="btn secondary" href="index.html">Back to overview</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-val">16->2h</div><div class="stat-label">Weekly effort reduced</div></div>
+      <div class="stat"><div class="stat-val">9</div><div class="stat-label">Subcontractors</div></div>
+      <div class="stat"><div class="stat-val">13</div><div class="stat-label">Disciplines</div></div>
+      <div class="stat"><div class="stat-val">700K+</div><div class="stat-label">Total tag environment</div></div>
+      <div class="stat"><div class="stat-val">Active</div><div class="stat-label">Workflow status</div></div>
+    </div>
+    <figure class="figure">
+      <img src="assets/screenshots/c3-updater.png" alt="C3 Excel Updater interface screenshot">
+      <figcaption>C3 reconciliation interface used to run weekly update, tag reconciliation, delta generation, and feedback application.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Context</div>
+    <div class="section-title">The recurring data problem</div>
+    <div class="split">
+      <div class="panel fade-in">
+        <h3>Before</h3>
+        <p>Weekly progress updates required manual comparison between subcontractor C3 forms and project progress reference exports, including EasyPlant exports. The process was slow and exposed to missing tags, duplicate tags, NA changes, unclear deltas, and inconsistent feedback.</p>
+      </div>
+      <div class="panel fade-in">
+        <h3>After</h3>
+        <p>The workflow creates a repeatable sequence for comparison, exception handling, stakeholder review, correction capture, and reporting preparation before data moves downstream.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="workflow" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Workflow</div>
+    <div class="section-title">Controlled review loop</div>
+    <p class="section-desc">The workflow connects source files, validation checks, stakeholder review, and reporting outputs in one weekly operating pattern.</p>
+    <div class="workflow">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <div><h3>Subcontractor C3 submissions</h3><p>Weekly C3 files arrive from subcontractors by contract and WorkClass scope.</p></div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <div><h3>Project reference comparison</h3><p>Submissions are compared against project C3 reference exports, including EasyPlant data, by tag, sheet, WorkClass, SubWorkClass, and progress step.</p></div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <div><h3>Validation and exception handling</h3><p>Missing tags, duplicates, NA events, increases, decreases, and invalid step patterns are separated for review.</p></div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <div><h3>Quality, Construction, and Planning review</h3><p>NA events, delta increases, and progress logic issues are routed to the right stakeholder before reporting close.</p></div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">05</div>
+        <div><h3>Correction and reporting preparation</h3><p>Approved corrections are applied back into working files, with outputs ready for project-system update preparation and weekly reporting.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outputs" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Outputs</div>
+    <div class="section-title">Controlled data products</div>
+    <div class="output-grid">
+      <div class="output fade-in">
+        <div class="output-k">Updated C3 files</div>
+        <p>Working files prepared after comparison of project progress reference data and subcontractor submissions.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">NA change report</div>
+        <p>Separate report for Quality review and controlled downstream handling.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">Tag reconciliation</div>
+        <p>Missing, duplicate, Easy-only, Sub-only, and to-be-added tag positions surfaced before close.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">Delta review</div>
+        <p>Full delta for Progress Team and increase-only delta for Construction Team confirmation.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">Feedback application</div>
+        <p>Approved corrected values applied back into the working dataset with visual traceability.</p>
+      </div>
+      <div class="output fade-in">
+        <div class="output-k">Reporting-ready data</div>
+        <p>Cleaner weekly inputs for management reporting and project progress review.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="value" class="section border">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Data Management Value</div>
+    <div class="section-title">Recurring validation and controlled preparation</div>
+    <div class="split">
+      <div class="panel fade-in">
+        <h3>What this demonstrates</h3>
+        <p>The workflow demonstrates recurring project data validation, exception handling, stakeholder review, and controlled reporting preparation across subcontractor submissions and project progress reference data, including EasyPlant exports.</p>
+      </div>
+      <div class="panel fade-in">
+        <h3>Why it matters</h3>
+        <p>It shifts weekly work from manual line-by-line comparison toward exception-based review, correction tracking, and repeatable project data governance.</p>
+      </div>
+    </div>
+    <p class="note">Guardrail: the workflow supports project-system update preparation, including EasyPlant update preparation, and reporting-data control; it is not positioned as direct database write-back.</p>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-line"></div>
+    <div class="section-tag">Contact</div>
+    <div class="section-title">Artem Kustov</div>
+    <p class="section-desc" style="margin-bottom:0">Engineering Data Management / EPC project data workflows.</p>
+    <div class="contact-links">
+      <a href="mailto:akustov1995@gmail.com" class="contact-link">Email</a>
+      <a href="https://linkedin.com/in/artem-kustov-74382925b" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Art-Kustuff" class="contact-link" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<div class="footer"><p>C3 Progress Data Reconciliation Workflow - 2026</p></div>
+<script src="../Job_Search_Control_Tower/assets/role-pages.js"></script>
+</body>
+</html>
